@@ -1,0 +1,71 @@
+:root {
+    --hex-bg-width: 120px;
+    --hex-bg-height: 140px;
+}
+
+.Protection {
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.Pcontrol {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.PlineA,
+.PlineB,
+.PlineC {
+    display: flex;
+}
+
+.Ppanel {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Ppassage {
+    width: 85%;
+    height: 75%;
+    border-radius: 20px;
+    padding: 50px;
+    font-size: 1.5em;
+    font-weight: bold;
+    background-color: #f5f5dc;
+    overflow: scroll;
+}
+
+.null {
+    color: darkcyan;
+    cursor: default;
+}
+
+.hexagon, .null {
+    margin: 0 20px;
+    font-size: 22px;
+    font-weight: bold;
+    color: white;
+    border: none;
+    outline: none;
+    background-color: darkcyan;
+    display: inline-block;
+    position: relative;
+
+    width: var(--hex-bg-width);
+    height: var(--hex-bg-height);
+    -webkit-clip-path: polygon(0 25%, 50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%);
+    clip-path: polygon(0 25%, 50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%);
+}
+
+.hexagon:hover{
+    cursor: pointer;
+    background-color:cadetblue;
+}

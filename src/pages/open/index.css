@@ -1,0 +1,69 @@
+.open-contain {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+    background-image: url('../../imgs/background.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    object-fit: cover;
+}
+.open-main {
+    top: 35%;
+    position: relative;
+    width: 600px;
+    height: 300px;
+    margin: 0 auto;
+}
+.open-ellipse {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 600px;
+    height: 300px;
+    border: 3px dashed #662500;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+svg.ellipse {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-12deg);
+}
+.openimg-container {
+    position: absolute;
+    cursor: pointer;
+    z-index: 111;
+}
+.openimg-container img {
+    width: 100%;
+    height: 100%;
+    transition: transform 0.3s;
+}
+.openimg-container:hover img {
+    transform: scale(1.2);
+}
+.image-0 {
+    width: 199px;
+    height: 138px;
+    top: -30%;
+    left: 40%;
+}
+.image-1 {
+    width: 182px;
+    height: 212px;
+    left: -10%;
+}
+.image-2 {
+    width: 168px;
+    height: 167px;
+    bottom: -10%;
+    left: 30%;
+}
+.image-3 {
+    width: 184px;
+    height: 184px;
+    top: 20%;
+    right: -8%;
+}
