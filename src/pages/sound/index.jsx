@@ -1,9 +1,12 @@
 import React,{useState, useEffect, useRef} from 'react'
 import { SoundOutlined } from '@ant-design/icons'
+import {useNavigate} from 'react-router-dom'
 import './index.css'
 import CartoonVideo from '../../media/cartoonVideo.mp4'
+import LogoTitle from '../../imgs/logoTitle.png'
 
 export default function Sound() {
+    const navigate = useNavigate();
     const videoRef = useRef(null);
     const [contentVisible, setContentVisible] = useState(false);
     const [muted, setMuted] = useState(true);
@@ -83,6 +86,10 @@ export default function Sound() {
         };
     }, [playingAnimals]);
 
+    const totheOprnPage = () => {
+        navigate('/open')
+    }
+
     
   return (
     <div className='sou-contain'>
@@ -91,6 +98,9 @@ export default function Sound() {
         </video>
         {contentVisible ? (
         <div className='sou-content'>
+            <div className='sou-logo' onClick={totheOprnPage}>
+                <img src={LogoTitle} alt="" className='sou-img'/>
+            </div>
             {animals.map((animal) => (
             <div
             key={animal.name}

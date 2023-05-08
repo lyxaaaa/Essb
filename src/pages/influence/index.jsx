@@ -2,12 +2,16 @@ import * as eCharts from "echarts"
 import React,{ useState, useEffect, useRef } from 'react'
 // import { echarts, setOption } from 'echarts.js'
 import './index.css'
-// import "https://s3.pstatp.com/cdn/expire-1-M/jquery/3.3.1/jquery.min.js"
+import sourceData from './riverFish.jsx'
 
 
 export default function Influence() {
-  const chartRef = useRef(null)
-  const chartRefOne = useRef(null)
+  const chartRef = useRef(null)//长江2017—2021年鱼类物种采集数量的空间分布
+  const chartRefTun = useRef(null)//长江江豚近年数量变化
+  const chartRefAnimal = useRef(null)//浮游动物
+  const chartRefPlant = useRef(null)//浮游植物
+  const chartRefOne = useRef(null)//2017-2021长江鱼类资源概览
+  const chartRefTwo = useRef(null)//休闲渔业调查
   const [scene, setScene] = useState('yuanyin')
   const switchScene = (arg) => {
     setScene(arg)
@@ -18,50 +22,282 @@ export default function Influence() {
       if (scene !== 'yuanyin') {
         return;
       }
-        // 创建一个 ECharts 实例
-        const chartInstance = eCharts.init(chartRef.current);        
+        // 创建ECharts 实例
+        const chartInstance = eCharts.init(chartRef.current);  
+        const myChart = eCharts.init(chartRefOne.current); 
+        const chartInstanceAnimal = eCharts.init(chartRefAnimal.current); 
+        const chartInstancePlant = eCharts.init(chartRefPlant.current);        
         // 设置图表数据和配置
-        var pieData = [
-            {
-                name: '栖息地破坏',
-                value: '2000'
-            },
-            {
-                name: '气候变化',
-                value: '1800'
-            },
-            {
-                name: '过度捕猎和⾮法贸易',
-                value: '2200'
-            },
-            {
-                name: '污染',
-                value: '1500'
-            },
-            {
-                name: '入侵物种',
-                value: '1300'
-            },
-            {
-                name: '人类活动',
-                value: '1600'
+        var optionRiver = {
+          title: {
+            text: '长江2017—2021年鱼类物种采集数量的空间分布',
+            left: 'center',
+            top: 'top',
+            textStyle: {
+              fontSize: 16
             }
-            
-        ]
-        var option = {
-            // 注意：饼图不是直角坐标系图表，就不用配置x轴和y轴了
-            series: [
-                {
-                    type: 'pie',
-                    data: pieData
+          },       
+          legend: {top:'bottom'},
+          tooltip: {},
+          dataset: {
+            dimensions: ['product', 
+                        '2017年前有分布记录的物种数',
+                        '2017-2021采集到的种类数', 
+                        '历史有分布而2017-2021未采集到的物种数',
+                        '2017-2021新采集记录到的物种数'],
+            source: sourceData
+          },
+          xAxis: {
+            type: 'category',
+            axisLabel: {
+              interval: 0,
+              rotate: 40,
+              formatter: function(value) {
+                return value;
+              }
+            }
+          },
+          yAxis: {},
+          series: [{ type: 'bar' }, { type: 'bar' }, { type: 'bar' },{ type: 'bar' }]
+        }     
+        var optionAnimal = {
+          title: {
+            text: '2017—2021长江流域浮游动物',
+            left: 'center',
+            top: 'top',
+            textStyle: {
+              fontSize: 16
+            }
+          },
+          tooltip: {
+            trigger: 'item'
+          },
+          legend: {
+            top: 'bottom',
+            left: 'center'
+          },
+          series: [
+            {
+              name: 'Access From',
+              type: 'pie',
+              radius: ['30%', '60%'],
+              avoidLabelOverlap: false,
+              itemStyle: {
+                borderRadius: 10,
+                borderColor: '#fff',
+                borderWidth: 2
+              },
+              label: {
+                show: false,
+                position: 'center',
+              },
+              emphasis: {
+                label: {
+                  show: true,
+                  fontSize: 25,
+                  fontWeight: 'bold'
                 }
-            ]
-        }       
+              },
+              labelLine: {
+                show: false
+              },
+              data: [
+                { value: 135, name: '原生动物' },
+                { value: 131, name: '轮虫' },
+                { value: 75, name: '枝角类' },
+                { value: 86, name: '桡足类' },
+                { value: 37, name: '其他' }
+              ]
+            }
+          ]
+        }
+        var optionPlant = {
+          title: {
+            text: '2017—2021长江流域浮游植物',
+            left: 'center',
+            top: 'top',
+            textStyle: {
+              fontSize: 16
+            }
+          },
+          tooltip: {
+            trigger: 'item'
+          },
+          legend: {
+            top: 'bottom',
+            left: 'center'
+          },
+          series: [
+            {
+              name: 'Access From',
+              type: 'pie',
+              radius: ['30%', '60%'],
+              avoidLabelOverlap: false,
+              itemStyle: {
+                borderRadius: 10,
+                borderColor: '#fff',
+                borderWidth: 2
+              },
+              label: {
+                show: false,
+                position: 'center',
+              },
+              emphasis: {
+                label: {
+                  show: true,
+                  fontSize: 28,
+                  fontWeight: 'bold'
+                }
+              },
+              labelLine: {
+                show: false
+              },
+              data: [
+                { value: 309, name: '硅藻' },
+                { value: 244, name: '绿藻' },
+                { value: 102, name: '蓝藻' },
+                { value: 95, name: '其他' },
+              ]
+            }
+          ]
+        }
+        // 指定图表的配置项和数据
+        var option1 ={
+          color: ['#80FFA5', '#00DDFF','#FF0087', '#FFBF00'],
+          title: {
+            text: '2017-2021长江鱼类资源概览',
+            left: 'center',
+            top: 'top',
+            padding: [30, 0, 0, 0] // 上, 右, 下, 左
+          },
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+              type: 'cross',
+              label: {
+                backgroundColor: '#6a7985'
+              }
+            }
+          },
+          legend: {
+            top:'bottom',
+            data: ['年均CPUE(kg/船*d)', '鱼类现存资源数量(亿尾)', '资源现存重量(万吨)']
+          },
+          toolbox: false,
+          grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '15%',
+            containLabel: true
+          },
+          xAxis: [
+            {
+              type: 'category',
+              boundaryGap: false,
+              data: ['全流域', '长江干流', '两湖', '各大支流']
+            }
+          ],
+          yAxis: [
+            {
+              type: 'value'
+            }
+          ],
+          series: [
+            {
+              name: '年均CPUE(kg/船*d)',
+              type: 'line',
+              stack: 'Total',
+              smooth: true,
+              lineStyle: {
+                width: 0
+              },
+              showSymbol: false,
+              areaStyle: {
+                opacity: 0.8,
+                color: new eCharts.graphic.LinearGradient(0, 0, 0, 1, [
+                  {
+                    offset: 0,
+                    color: 'rgb(128, 255, 165)'
+                  },
+                  {
+                    offset: 1,
+                    color: 'rgb(1, 191, 236)'
+                  }
+                ])
+              },
+              emphasis: {
+                focus: 'series'
+              },
+              data: [7.89,7.86,20.31,5.76]
+            },
+            {
+              name: '鱼类现存资源数量(亿尾)',
+              type: 'line',
+              stack: 'Total',
+              smooth: true,
+              lineStyle: {
+                width: 0
+              },
+              showSymbol: false,
+              areaStyle: {
+                opacity: 0.8,
+                color: new eCharts.graphic.LinearGradient(0, 0, 0, 1, [
+                  {
+                    offset: 0,
+                    color: 'rgb(0, 221, 255)'
+                  },
+                  {
+                    offset: 1,
+                    color: 'rgb(77, 119, 255)'
+                  }
+                ])
+              },
+              emphasis: {
+                focus: 'series'
+              },
+              data: [8.86,5.94,2.08,0.83]
+            },
+            {
+              name: '资源现存重量(万吨)',
+              type: 'line',
+              stack: 'Total',
+              smooth: true,
+              lineStyle: {
+                width: 0
+              },
+              showSymbol: false,
+              areaStyle: {
+                opacity: 0.8,
+                color: new eCharts.graphic.LinearGradient(0, 0, 0, 1, [
+                  {
+                    offset: 0,
+                    color: 'rgb(55, 162, 255)'
+                  },
+                  {
+                    offset: 1,
+                    color: 'rgb(116, 21, 219)'
+                  }
+                ])
+              },
+              emphasis: {
+                focus: 'series'
+              },
+              data: [12.48,4.23,7.84,0.41]
+            },
+          ]
+        };
+        //使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option1);
           // 更新图表数据
-          chartInstance.setOption(option);        
+          chartInstance.setOption(optionRiver);   
+          chartInstanceAnimal.setOption(optionAnimal);
+          chartInstancePlant.setOption(optionPlant)     
           // 在组件卸载时清除图表实例
           return () => {
             chartInstance.dispose();
+            chartInstanceAnimal.dispose();
+            chartInstancePlant.dispose();
+            myChart.dispose();
           };
         },[scene]);
 
@@ -70,51 +306,107 @@ export default function Influence() {
             return;
           }
           // 创建一个 ECharts 实例
-          const myChart = eCharts.init(chartRefOne.current);
-    
-          // 指定图表的配置项和数据
-          var option1 = {
-        
-              title:{
-                text:'水生动物',
-                // textStyle:{
-                //   color:'orange'
-                // },
-                // borderWidth:5,
-                // borderColor:'orange',
-                // borderRadius:20,
-                // left:150
-              },
-              tooltip: {
-                trigger:'item',
-                triggerOn:'click',
-                // formatter:'{b}:{c}',
-                formatter:function(arg){
-                  console.log(arg)
-                  return arg.name +'约有'+ arg.data + '余种'
+          const chartInstanceTun = eCharts.init(chartRefTun.current);   
+          var optionTun = {
+            title: {
+              text: '长江江豚近年数量变化',
+              left: 'center',
+              top: 'top',
+              textStyle: {
+                fontSize: 16
+              }
+            },
+            tooltip: {
+              trigger: 'axis',
+              formatter: '{b}: {c}'
+            },
+            xAxis: {
+              type: 'category',
+              data: ['2006', '2012', '2017', '2022']
+            },
+            yAxis: {
+              type: 'value'
+            },
+            series: [
+              {
+                data: [1800, 1045, 1012, 1249],
+                type: 'line',
+                showSymbol: true,
+                emphasis: {
+                  scale: true
                 }
-              },
-              // legend: {
-              //     data:['语文']
-              // },
-              xAxis: {
-                  data: ["鱼类","浮游植物","浮游动物","底栖动物","水生高等植物"]
-              },
-              yAxis: {},
-              series: [{
-                  name: '水生动物数量',
-                  type: 'bar',
-                  data: ['400','1200','700','1000','1000'],
-                  color:'#5dac81',
-              }],
-          };
-        
-          //使用刚指定的配置项和数据显示图表。
-          myChart.setOption(option1);
-    
+              }
+            ]
+          }  
+          chartInstanceTun.setOption(optionTun); 
+
+      // 创建一个 ECharts 实例
+      const myChartTwo = eCharts.init(chartRefTwo.current);
+      // 指定图表的配置项和数据
+      var option2 = {
+        title: {
+          text: '2017年休闲渔业调查',
+          left:'center',
+          top:'top'
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'shadow'
+          }
+        },
+        legend: {
+          top:'bottom',
+          data: ['垂钓者人数', '年垂钓量(吨)', '年垂钓量在江段资源现存量占比(%)']
+        },
+        xAxis: {
+          type: 'category',
+          data: ['长江上游', '三峡库区', '长江中游', '长江下游']
+        },
+        yAxis: [
+          {
+            type: 'value',
+            name: '人数/垂钓量',
+            min: 0,
+            max: 7000,
+            position: 'left'
+          },
+          {
+            type: 'value',
+            name: '年垂钓量占比',
+            min: 0,
+            max: 10,
+            position: 'right',
+            axisLabel: {
+              formatter: '{value} %'
+            }
+          }
+        ],
+        series: [
+          {
+            name: '垂钓者人数',
+            type: 'bar',
+            data: [2344, 4764, 4600, 6649]
+          },
+          {
+            name: '年垂钓量(吨)',
+            type: 'bar',
+            data: [45, 294.7, 171.1, 478.7]
+          },
+          {
+            name: '年垂钓量在江段资源现存量占比(%)',
+            type: 'line',
+            yAxisIndex: 1,
+            data: [8.6, 2, 1.8, 3.6]
+          }
+        ]
+      };
+      //使用刚指定的配置项和数据显示图表。
+      myChartTwo.setOption(option2);   
           // 在组件卸载时清除图表实例
           return () => {
-            myChart.dispose();
+            myChartTwo.dispose();
+            chartInstanceTun.dispose();
           };
         },[scene]);
 
@@ -156,11 +448,15 @@ export default function Influence() {
         {scene == 'yuanyin'
         ?
         <div className="infchart-contain">
-          <div ref={chartRef} style={{ width: '600px', height: '400px' ,backgroundColor:'#f0f7f3'}}></div>
+          <div ref={chartRef} style={{ width: '1000px', height: '400px' ,backgroundColor:'#f0f7f3',margin:'20px 0px'}}></div>
+          <div ref={chartRefAnimal} style={{ width: '500px', height: '300px' ,backgroundColor:'#f0f7f3',margin:'20px 0px'}}></div>
+          <div ref={chartRefPlant} style={{ width: '500px', height: '300px' ,backgroundColor:'#f0f7f3',margin:'20px 0px'}}></div>
+          <div ref={chartRefOne} style={{ width: '1000px', height: '450px' ,backgroundColor:'#f0f7f3',margin:'20px 0px'}}></div>
         </div>
         :
         <div className="infchart-contain">
-          <div ref={chartRefOne} style={{ width: '600px', height: '400px' ,backgroundColor:'#f0f7f3'}}></div>
+          <div ref={chartRefTwo} style={{ width: '600px', height: '400px' ,backgroundColor:'#f0f7f3',margin:'20px 0px'}}></div>
+          <div ref={chartRefTun} style={{ width: '1000px', height: '400px' ,backgroundColor:'#f0f7f3',margin:'20px 0px'}}></div>
         </div>
         }
       </div>

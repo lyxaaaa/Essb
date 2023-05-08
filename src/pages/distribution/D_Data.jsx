@@ -147,7 +147,6 @@ const geoCoordMap = {
     柳州: [109.4, 24.33],
     三亚: [109.511909, 18.252847],
     自贡: [104.778442, 29.33903],
-    吉林: [126.57, 43.87],
     阳江: [111.95, 21.85],
     泸州: [105.39, 28.91],
     青海: [101.74, 36.56],
@@ -284,7 +283,7 @@ const option = {
             }
         },
         {
-            name: 'Top 5',
+            name: 'Top 6',
             type: 'effectScatter',
             coordinateSystem: 'bmap',
             data: convertData(

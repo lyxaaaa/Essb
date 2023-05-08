@@ -43,3 +43,16 @@
 .anchorBL {
     display: none;
 }
+
+.dis-contain {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.map-dis {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}

@@ -56,9 +56,9 @@ export default function Display() {
     setTitle('长江鲟')
   }
   const changeWu8 = () => {
-    setContent('一种受欢迎的食用鱼类，在长江流域非常常见。然而，由于过度捕捞、水污染和水利工程等因素的影响，黄鳝的数量也在减少。')
-    setImagesrc('https://s2.loli.net/2023/05/01/iJxSODVHKCPbypW.jpg')
-    setTitle('黄鳝')
+    setContent('胭脂鱼是胭脂鱼科、胭脂鱼属鱼类。它是一种中国特有的淡水鱼，分布于长江和福建闽江。胭脂鱼体型奇特，色彩鲜明，尤其幼鱼体形别致，色彩绚丽，游动文静，被人们荣称为“一帆风顺”。')
+    setImagesrc('https://s2.loli.net/2023/05/05/bIM84CinKXuG2yd.png')
+    setTitle('胭脂鱼')
   }
   const changeWu9 = () => {
     setContent('原产于长江流域的一种濒危鹿类，目前野外种群已经灭绝，仅有少量圈养种群。')
@@ -181,7 +181,7 @@ export default function Display() {
               <div className="menu_label" tabIndex="1" onClick={changeWu5}>长江江豚</div>
               <div className="menu_label" tabIndex="1" onClick={changeWu6}>中华鲟</div>
               <div className="menu_label" tabIndex="1" onClick={changeWu7}>长江鲟</div>
-              <div className="menu_label" tabIndex="1" onClick={changeWu8}>黄鳝</div>
+              <div className="menu_label" tabIndex="1" onClick={changeWu8}>胭脂鱼</div>
             </div> : ''}
           {scene == 'lusheng' ?
             <div  className="liebiao">
